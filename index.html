@@ -13,9 +13,10 @@
         <section class="container">
             <h1>We are launching <strong>soon!</strong></h1>
             <p>Subscribe and get notified</p>
-            <form action="#" method="POST" id="myForm">
-                <input type="email" placeholder="Your Email Address..." maxlength="100" id="email" required=""/>
-                <input type="submit" value="Notify Me" class="btn" required=""/>
+            <form action="#" class="myform" name="form">
+                <input type="email" placeholder="Your Email Address..." class="email"/>
+                <p id="error">Please provide a valid email address</p>
+                <input type="submit" value="Notify Me" class="btn"/>
             </form>
         </section>
         <section>
@@ -27,10 +28,27 @@
             <a href="#"><i class="fab fa-twitter"></i></a>
             <p>&copy Copyright Ping. All rights reserved.</p>
         </footer>
-        <script src="https://code.jquery.com/jquery-3.4.1.min.js" type="text/javascript"></script>
-        <script src="https://cdnjs.cloudflare.com/ajax/libs/parsley.js/2.9.1/parsley.min.js"></script>
-        <script type="text/javascript">
-        $('#myForm').parsley();
+        <script>
+            const form = document.forms.form;
+            const email = document.querySelector('.email');
+            const submit = document.querySelector('.btn');
+            const error = document.getElementById('error');
+            const regex = /[a-zA-Z]+[1-9]*[@]{1}[a-z]+[.]{1}[a-z]/;
+
+            function validateEmail(e) {
+                if (!regex.test(email.value)) {
+                email.style.border = '1px solid hsl(354, 100%, 66%)';
+                error.style.display = 'block';
+                email.focus();
+                } else {
+                    email.style.border = '1px solid hsl(130, 100%, 44%)';
+                    error.style.display = 'none';
+                    email.focus();
+                }
+                e.preventDefault();
+            }
+
+            form.addEventListener('submit', validateEmail);
         </script>
     </body>
     </html>
